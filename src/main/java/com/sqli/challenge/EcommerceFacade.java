@@ -1,36 +1,28 @@
 package com.sqli.challenge;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import com.sqli.challenge.entities.Machine;
-import com.sqli.challenge.entities.Product;
+import com.sqli.challenge.items.Cart;
+import com.sqli.challenge.items.Machine;
 import com.sqli.challenge.presenters.CartContentPresenter;
 import com.sqli.challenge.presenters.DefaultCartContentPresenter;
 
 public final class EcommerceFacade
 {
   private final CartContentPresenter cartContentPresenter = new DefaultCartContentPresenter();
-  private final Map<? super String, Product> products = new HashMap<>();
-  
-  private void addProduct (final Product product)
+
+  private final Cart cart;
+
+  public EcommerceFacade()
   {
-    products.put(product.getName(), product);
+    cart = new Cart();
   }
-  
-  public void addMachine (final String code, final int quantity, final int price)
+
+  public void addMachine(final String name, final int quantity, final double price)
   {
-    addProduct(new Machine(code, quantity, price));
+    cart.addProduct(new Machine(name, price), quantity);
   }
-  
-  public String cartContent ()
+
+  public String cartContent()
   {
-    return cartContentPresenter.presentCartContent(
-        products.values()
-          .stream()
-          .collect(Collectors.groupingBy(Product::groupingByIdentifier)),
-        Comparator.comparing(Product::getName));
+    return cartContentPresenter.present(cart.getContent());
   }
 }

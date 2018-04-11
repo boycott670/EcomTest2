@@ -2,35 +2,36 @@ package com.sqli.challenge.presenters;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import com.sqli.challenge.entities.Product;
+import com.sqli.challenge.items.Product;
 
 public final class DefaultCartContentPresenter implements CartContentPresenter
 {
+
   @Override
-  public String presentCartContent(Map<? extends String, ? extends Collection<? extends Product>> products,
-      Comparator<? super Product> productComparator)
+  public String present(Collection<? extends Entry<? extends Product, ? extends Integer>> cartContent)
   {
-    final StringBuilder cartContent = new StringBuilder();
-    
-    for (final Entry<? extends String, ? extends Collection<? extends Product>> productsEntry : products.entrySet())
-    {
-      cartContent.append(String.format("%s\n", productsEntry.getKey()));
-      
-      for (final Product product : productsEntry.getValue()
-          .stream()
-          .sorted(productComparator)
-          .collect(Collectors.toList()))
-      {
-        cartContent.append(String.format("\tName: %s", product.getName()));
-        cartContent.append(String.format("\tQuantity: %d", product.getQuantity()));
-        cartContent.append(String.format("\tPrice: %.0f\n", product.getPrice()));
-      }
-    }
-    
-    return cartContent.toString();
+    final StringBuilder cartContentPresentation = new StringBuilder();
+
+    cartContent.stream().collect(Collectors.groupingBy(cartEntry -> cartEntry.getKey().getClass().getSimpleName(),
+        TreeMap::new, Collectors.toList())).forEach((productsEntriesType, productsEntries) ->
+        {
+          cartContentPresentation.append(productsEntriesType + "s" + "\n");
+
+          productsEntries.stream().sorted(Comparator.comparing(productEntry -> productEntry.getKey().getName()))
+              .forEach(productEntry ->
+              {
+                cartContentPresentation.append(String.format("\tName: %s", productEntry.getKey().getName()));
+                cartContentPresentation.append(String.format("\tQuantity: %d", productEntry.getValue()));
+                cartContentPresentation.append(
+                    String.format("\tPrice: %.0f\n", productEntry.getKey().getPrice() * productEntry.getValue()));
+              });
+        });
+
+    return cartContentPresentation.toString();
   }
+
 }
