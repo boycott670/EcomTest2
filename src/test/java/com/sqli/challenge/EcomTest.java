@@ -161,4 +161,17 @@ public class EcomTest
     ecommerceFacade = ecommerceFacade.order();
     assertFalse(ecommerceFacade.hasErrors());
   }
+
+  @Test
+  public void testVoucherCodeRequireMachinePurchase()
+  {
+    EcommerceFacade ecommerceFacade = new EcommerceFacade();
+    ecommerceFacade.voucher("12345");
+    ecommerceFacade.addCapsule("ROMA", 20, 3);
+    ecommerceFacade.addCapsule("RISTRETTO", 15, 4);
+    ecommerceFacade.addCapsule("KAZAAR", 10, 5);
+    ecommerceFacade = ecommerceFacade.order();
+    assertTrue(ecommerceFacade.hasErrors());
+    assertEquals("Voucher requires machine purchase", ecommerceFacade.errors());
+  }
 }
