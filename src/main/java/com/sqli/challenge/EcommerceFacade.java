@@ -33,6 +33,11 @@ public final class EcommerceFacade
     cart.addProduct(new Capsule(name, price), quantity);
   }
 
+  public void removeCapsule(final String name, final int quantity)
+  {
+    cart.addProduct(new Capsule(name), -quantity);
+  }
+
   public String cartContent()
   {
     return cartContentPresenter.present(cart.getContent());
