@@ -1,6 +1,7 @@
 package com.sqli.challenge;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -138,5 +139,26 @@ public class EcomTest
     ecommerceFacade = ecommerceFacade.order();
     assertTrue(ecommerceFacade.hasErrors());
     assertEquals("ROMA: Invalid Quantity, must be a multiple of 5", ecommerceFacade.errors());
+  }
+
+  @Test
+  public void testVoucherCodeFailIfNotNumeric()
+  {
+    EcommerceFacade ecommerceFacade = new EcommerceFacade();
+    ecommerceFacade.voucher("vouchercode");
+    ecommerceFacade.addMachine("PIXIE", 1, 350);
+    ecommerceFacade = ecommerceFacade.order();
+    assertTrue(ecommerceFacade.hasErrors());
+    assertEquals("Invalid voucher code", ecommerceFacade.errors());
+  }
+
+  @Test
+  public void testVoucherCodeSucessIfNumeric()
+  {
+    EcommerceFacade ecommerceFacade = new EcommerceFacade();
+    ecommerceFacade.voucher("12345");
+    ecommerceFacade.addMachine("PIXIE", 1, 350);
+    ecommerceFacade = ecommerceFacade.order();
+    assertFalse(ecommerceFacade.hasErrors());
   }
 }
