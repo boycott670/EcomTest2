@@ -56,4 +56,17 @@ public class EcomTest
         "Capsules\n\tName: KAZAAR\tQuantity: 10\tPrice: 50\n\tName: RISTRETTO\tQuantity: 15\tPrice: 60\n\tName: ROMA\tQuantity: 20\tPrice: 60\n",
         ecommerceFacade.cartContent());
   }
+
+  @Test
+  public void testGroupCapsulesWithTheSameName()
+  {
+    EcommerceFacade ecommerceFacade = new EcommerceFacade();
+    ecommerceFacade.addCapsule("ROMA", 20, 3);
+    ecommerceFacade.addCapsule("RISTRETTO", 15, 4);
+    ecommerceFacade.addCapsule("KAZAAR", 10, 5);
+    ecommerceFacade.addCapsule("ROMA", 10, 3);
+    assertEquals(
+        "Capsules\n\tName: KAZAAR\tQuantity: 10\tPrice: 50\n\tName: RISTRETTO\tQuantity: 15\tPrice: 60\n\tName: ROMA\tQuantity: 30\tPrice: 90\n",
+        ecommerceFacade.cartContent());
+  }
 }
