@@ -7,13 +7,14 @@ import com.sqli.challenge.presenters.DefaultCartContentPresenter;
 
 public final class EcommerceFacade
 {
-  private final CartContentPresenter cartContentPresenter = new DefaultCartContentPresenter();
+  private final CartContentPresenter cartContentPresenter;
 
   private final Cart cart;
 
   public EcommerceFacade()
   {
     cart = new Cart();
+    cartContentPresenter = new DefaultCartContentPresenter();
   }
 
   public void addMachine(final String name, final int quantity, final double price)
