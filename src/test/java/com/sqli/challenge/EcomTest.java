@@ -127,4 +127,16 @@ public class EcomTest
     assertTrue(ecommerceFacade.hasErrors());
     assertEquals("Empty Cart", ecommerceFacade.errors());
   }
+
+  @Test
+  public void testPackagingRuleCapsules()
+  {
+    EcommerceFacade ecommerceFacade = new EcommerceFacade();
+    ecommerceFacade.addCapsule("ROMA", 7, 3);
+    ecommerceFacade.addCapsule("RISTRETTO", 15, 4);
+    ecommerceFacade.addCapsule("KAZAAR", 10, 5);
+    ecommerceFacade = ecommerceFacade.order();
+    assertTrue(ecommerceFacade.hasErrors());
+    assertEquals("ROMA: Invalid Quantity, must be a multiple of 5", ecommerceFacade.errors());
+  }
 }

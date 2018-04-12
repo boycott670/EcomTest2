@@ -12,6 +12,7 @@ import com.sqli.challenge.presenters.CartContentPresenter;
 import com.sqli.challenge.presenters.CartSummaryPresenter;
 import com.sqli.challenge.presenters.DefaultCartContentPresenter;
 import com.sqli.challenge.presenters.DefaultCartSummaryPresenter;
+import com.sqli.challenge.validators.cart.content.CapsulesPackagingRulesValidator;
 import com.sqli.challenge.validators.cart.content.CartContentValidator;
 import com.sqli.challenge.validators.cart.content.EmptyCartContentValidator;
 
@@ -33,7 +34,7 @@ public final class EcommerceFacade
     cartContentPresenter = new DefaultCartContentPresenter();
     cartSummaryPresenter = new DefaultCartSummaryPresenter();
 
-    cartContentValidators = Arrays.asList(new EmptyCartContentValidator());
+    cartContentValidators = Arrays.asList(new EmptyCartContentValidator(), new CapsulesPackagingRulesValidator());
   }
 
   public void addMachine(final String name, final int quantity, final double price)
