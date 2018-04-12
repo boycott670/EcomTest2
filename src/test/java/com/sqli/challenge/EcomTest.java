@@ -1,6 +1,7 @@
 package com.sqli.challenge;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -116,5 +117,14 @@ public class EcomTest
     ecommerceFacade.addCapsule("ROMA", 10, 3);
     assertEquals("Capsules\n\tQuantity: 55\tPrice: 200\nMachines\n\tQuantity: 4\tPrice: 1050\nTotal Price: 1250\n",
         ecommerceFacade.summary());
+  }
+
+  @Test
+  public void testCantOrderAnEmptyCart()
+  {
+    EcommerceFacade ecommerceFacade = new EcommerceFacade();
+    ecommerceFacade = ecommerceFacade.order();
+    assertTrue(ecommerceFacade.hasErrors());
+    assertEquals("Empty Cart", ecommerceFacade.errors());
   }
 }
