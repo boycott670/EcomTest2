@@ -30,4 +30,18 @@ public class EcomTest
         "Machines\n\tName: CITIZ\tQuantity: 1\tPrice: 200\n\tName: PIXIE\tQuantity: 2\tPrice: 700\n\tName: PRODIGIO\tQuantity: 1\tPrice: 150\n",
         ecommerceFacade.cartContent());
   }
+
+  @Test
+  public void testRomoveMachine()
+  {
+    EcommerceFacade ecommerceFacade = new EcommerceFacade();
+    ecommerceFacade.addMachine("PRODIGIO", 1, 150);
+    ecommerceFacade.addMachine("PIXIE", 1, 350);
+    ecommerceFacade.addMachine("CITIZ", 1, 200);
+    ecommerceFacade.addMachine("PIXIE", 1, 350);
+    ecommerceFacade.removeMachine("PIXIE", 1);
+    assertEquals(
+        "Machines\n\tName: CITIZ\tQuantity: 1\tPrice: 200\n\tName: PIXIE\tQuantity: 1\tPrice: 350\n\tName: PRODIGIO\tQuantity: 1\tPrice: 150\n",
+        ecommerceFacade.cartContent());
+  }
 }

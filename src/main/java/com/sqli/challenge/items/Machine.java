@@ -9,4 +9,9 @@ public final class Machine extends Product
     // TODO Auto-generated constructor stub
   }
 
+  public Machine(String name)
+  {
+    this(name, 0);
+  }
+
 }

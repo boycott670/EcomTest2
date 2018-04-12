@@ -22,6 +22,11 @@ public final class EcommerceFacade
     cart.addProduct(new Machine(name, price), quantity);
   }
 
+  public void removeMachine(final String name, final int quantity)
+  {
+    cart.addProduct(new Machine(name), -quantity);
+  }
+
   public String cartContent()
   {
     return cartContentPresenter.present(cart.getContent());
