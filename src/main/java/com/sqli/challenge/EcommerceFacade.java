@@ -4,11 +4,14 @@ import com.sqli.challenge.items.Capsule;
 import com.sqli.challenge.items.Cart;
 import com.sqli.challenge.items.Machine;
 import com.sqli.challenge.presenters.CartContentPresenter;
+import com.sqli.challenge.presenters.CartSummaryPresenter;
 import com.sqli.challenge.presenters.DefaultCartContentPresenter;
+import com.sqli.challenge.presenters.DefaultCartSummaryPresenter;
 
 public final class EcommerceFacade
 {
   private final CartContentPresenter cartContentPresenter;
+  private final CartSummaryPresenter cartSummaryPresenter;
 
   private final Cart cart;
 
@@ -16,6 +19,7 @@ public final class EcommerceFacade
   {
     cart = new Cart();
     cartContentPresenter = new DefaultCartContentPresenter();
+    cartSummaryPresenter = new DefaultCartSummaryPresenter();
   }
 
   public void addMachine(final String name, final int quantity, final double price)
@@ -41,5 +45,10 @@ public final class EcommerceFacade
   public String cartContent()
   {
     return cartContentPresenter.present(cart.getContent());
+  }
+
+  public String summary()
+  {
+    return cartSummaryPresenter.present(cart.getContent());
   }
 }

@@ -12,11 +12,11 @@ public final class DefaultCartContentPresenter implements CartContentPresenter
 {
 
   @Override
-  public String present(Collection<? extends Entry<? extends Product, ? extends Integer>> cartContent)
+  public String present(Collection<? extends Entry<? extends Product, ? extends Integer>> cart)
   {
     final StringBuilder cartContentPresentation = new StringBuilder();
 
-    cartContent.stream().collect(Collectors.groupingBy(cartEntry -> cartEntry.getKey().getClass().getSimpleName(),
+    cart.stream().collect(Collectors.groupingBy(cartEntry -> cartEntry.getKey().getClass().getSimpleName(),
         TreeMap::new, Collectors.toList())).forEach((productsEntriesType, productsEntries) ->
         {
           cartContentPresentation.append(productsEntriesType + "s" + "\n");
